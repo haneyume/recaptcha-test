@@ -1,14 +1,44 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="/favicon.ico" />
-
     <title>recaptcha-test</title>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+      function onSubmit(token) {
+        const name = document.getElementById('name').value;
+        const gender = document.getElementById('gender').value;
+
+        fetch('/api/submit', {
+          method: 'POST',
+          body: JSON.stringify({ name, gender, token }),
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),
+        });
+      }
+    </script>
   </head>
 
-  <body></body>
+  <body>
+    <div>
+      <input id="name" type="text" name="name" placeholder="Name" />
+    </div>
+
+    <div>
+      <input id="gender" type="text" name="gender" placeholder="Gender" />
+    </div>
+
+    <button
+      class="g-recaptcha"
+      data-sitekey="6LeTUMogAAAAAA68L8jEvQAllDFrwQpxWlCNHZS7"
+      data-callback="onSubmit"
+      data-action="submit"
+    >
+      Submit
+    </button>
+  </body>
 </html>
